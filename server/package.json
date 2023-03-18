@@ -1,0 +1,16 @@
+{
+  "name": "lws-json-server-todos",
+  "description": "Example in memory todos api with json-server by shahnewaz",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "Shahnewaz",
+  "dependencies": {
+    "json-server": "^0.17.2",
+    "json-server-auth": "^2.1.0",
+    "nodemon": "^2.0.21"
+  }
+}
