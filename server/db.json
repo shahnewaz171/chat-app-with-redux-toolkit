@@ -17,6 +17,14 @@
       "password": "$2a$10$CtHS.yCGS80jiuZx8yKEI.5zdiZykHF/6aPTDqpHl6ZqEFGISOHKO",
       "name": "Saad Hasan",
       "id": 3
+    },
+    {
+      "email": "shahnewaz601@gmail.com",
+      "password": "$2a$10$xEWYg/FV8mclt3IfsMa2WuGOo7fXIzku/ovv9kfEk/9eQ.NFMXWwu",
+      "name": "Muhammad Shahnewaz",
+      "confirmPassword": "123456",
+      "isAgreed": true,
+      "id": 4
     }
   ],
   "conversations": [
