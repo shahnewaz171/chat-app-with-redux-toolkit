@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logoImage from "../assets/images/chat-app-logo.png";
 
 export default function Register() {
   return (
@@ -7,7 +8,7 @@ export default function Register() {
         <div className="max-w-md w-full space-y-8">
           <div>
             <Link to="/">
-              <p className="mx-auto h-12 w-auto">Chat app with rtk query</p>
+              <img src={logoImage} className="mx-auto h-12 w-auto" alt="logo" />
             </Link>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Create your account

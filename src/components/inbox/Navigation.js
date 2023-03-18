@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logoImage from "../../assets/images/lws-logo-dark.svg";
+import logoImage from "../../assets/images/chat-app-logo.png";
 
 export default function Navigation() {
   return (
@@ -7,7 +7,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between h-16 items-center">
           <Link to="/">
-            <p className="h-10">Chat app with rtk query</p>
+            <img src={logoImage} className="h-10" alt="logo" />
           </Link>
           <ul>
             <li className="text-white">

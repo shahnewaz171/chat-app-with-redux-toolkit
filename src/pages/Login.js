@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Error from "../components/ui/Error";
+import logoImage from "../assets/images/chat-app-logo.png";
 
 export default function Login() {
   return (
@@ -8,7 +9,7 @@ export default function Login() {
         <div className="max-w-md w-full space-y-8">
           <div>
             <Link to="/">
-              <p className="mx-auto h-12 w-auto">Chat app with rtk query</p>
+              <img src={logoImage} className="mx-auto h-12 w-auto" alt="logo" />
             </Link>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Sign in to your account
