@@ -20,12 +20,14 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const updatedData = { ...mutationData };
+    delete updatedData.confirmPassword;
 
-    if (mutationData?.password !== mutationData.confirmPassword) {
+    if (updatedData?.password !== updatedData.confirmPassword) {
       setError("Password do not match");
-    } else if (size(mutationData)) {
+    } else if (size(updatedData)) {
       setError();
-      register(mutationData)
+      register(updatedData)
         .unwrap()
         .then((payload) => {
           const response = payload;
