@@ -23,7 +23,7 @@ const Register = () => {
     const updatedData = { ...mutationData };
     delete updatedData.confirmPassword;
 
-    if (updatedData?.password !== updatedData.confirmPassword) {
+    if (mutationData?.password !== mutationData.confirmPassword) {
       setError("Password do not match");
     } else if (size(updatedData)) {
       setError();

@@ -1,18 +1,58 @@
-import { debounce } from "lodash";
-import { useRef, useState } from "react";
+import { debounce, size } from "lodash";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  conversationApi,
+  useAddConversationMutation,
+  useEditConversationMutation,
+} from "../../features/conversations/conversationApi";
 import { useGetUserQuery } from "../../features/users/userApi";
 import isValidEmail from "../../utils/isValidEmail";
 import Error from "../ui/Error";
 
 const Modal = ({ open, control }) => {
+  const { user: loggedInUser } = useSelector((state) => state.auth);
   const [mutationData, setMutationData] = useState({});
   const [userCheck, setUserCheck] = useState(false);
+  const [responseError, setResponseError] = useState("");
+  const [conversations, setConversations] = useState(undefined);
+  const dispatch = useDispatch();
   const formRef = useRef(null);
 
   //   query
   const { data: participant } = useGetUserQuery(mutationData?.sender, {
     skip: !userCheck,
   });
+
+  const isLoggedInUserParticipant =
+    size(participant) && participant[0]?.email === loggedInUser?.email;
+
+  // add and edit conversations
+  const [addConversation] = useAddConversationMutation();
+  const [editConversation] = useEditConversationMutation();
+
+  useEffect(() => {
+    if (!isLoggedInUserParticipant) {
+      // check conversation existence
+      dispatch(
+        conversationApi.endpoints.getConversation.initiate({
+          userEmail: loggedInUser?.email,
+          participantsEmail: mutationData?.sender,
+        })
+      )
+        .unwrap()
+        .then((data) => {
+          setResponseError("");
+          setConversations(data);
+        })
+        .catch((err) => setResponseError("There was a problem!"));
+    }
+  }, [
+    dispatch,
+    isLoggedInUserParticipant,
+    loggedInUser?.email,
+    mutationData?.sender,
+  ]);
 
   const handleChange = debounce((type, value) => {
     if (type === "sender") {
@@ -24,11 +64,44 @@ const Modal = ({ open, control }) => {
       setMutationData((prevData) => ({ ...prevData, [type]: value }));
     }
   }, 700);
-  console.log(participant);
 
   const handleMessage = (e) => {
     e.preventDefault();
-    formRef.current.reset();
+
+    const updatedData = {
+      participants: `${loggedInUser?.email}-${participant[0]?.email}`,
+      users: [loggedInUser, participant[0]],
+      message: mutationData?.message,
+      timestamp: new Date().getTime(),
+    };
+
+    if (size(conversations)) {
+      // edit conversation
+      editConversation({
+        id: conversations[0]?.id,
+        data: updatedData,
+        sender: loggedInUser?.email,
+      })
+        .unwrap()
+        .then((data) => {
+          alert("Successfully sent");
+          formRef.current.reset();
+          setMutationData({});
+          control();
+        })
+        .catch((err) => alert("There was a problem!"));
+    } else if (size(conversations) === 0) {
+      // add conversation
+      addConversation({ sender: loggedInUser?.email, data: updatedData })
+        .unwrap()
+        .then((data) => {
+          alert("Successfully sent");
+          formRef.current.reset();
+          setMutationData({});
+          control();
+        })
+        .catch((err) => alert("There was a problem!"));
+    }
   };
 
   return (
@@ -81,6 +154,9 @@ const Modal = ({ open, control }) => {
             <div>
               <button
                 type="submit"
+                disabled={
+                  isLoggedInUserParticipant || conversations === undefined
+                }
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
               >
                 Send Message
@@ -92,6 +168,12 @@ const Modal = ({ open, control }) => {
             ) : (
               ""
             )}
+            {(() => {
+              if (isLoggedInUserParticipant)
+                return <Error message="You can not send message yourself!" />;
+              return "";
+            })()}
+            {responseError && <Error message={responseError} />}
           </form>
         </div>
       </>

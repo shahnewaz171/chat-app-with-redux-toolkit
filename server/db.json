@@ -18,6 +18,13 @@
       "password": "$2a$10$CtHS.yCGS80jiuZx8yKEI.5zdiZykHF/6aPTDqpHl6ZqEFGISOHKO",
       "name": "Saad Hasan",
       "id": 3
+    },
+    {
+      "email": "khondokar1@gmail.com",
+      "password": "$2a$10$8O7yxSERUyiof6sCc1qbqejfgTFLhAmv3LhGvPFSzaQOGAyjt9bDW",
+      "name": "khondokar1",
+      "isAgreed": true,
+      "id": 4
     }
   ],
   "conversations": [
@@ -56,6 +63,27 @@
       ],
       "message": "How are you?",
       "timestamp": 1661976143678
+    },
+    {
+      "participants": "shahnewaz601@gmail.com-khondokar1@gmail.com",
+      "users": [
+        {
+          "email": "shahnewaz601@gmail.com",
+          "name": "Muhammad Shahnewaz",
+          "isAgreed": true,
+          "id": 1
+        },
+        {
+          "email": "khondokar1@gmail.com",
+          "password": "$2a$10$8O7yxSERUyiof6sCc1qbqejfgTFLhAmv3LhGvPFSzaQOGAyjt9bDW",
+          "name": "khondokar1",
+          "isAgreed": true,
+          "id": 4
+        }
+      ],
+      "message": "I'm fine and you?\n",
+      "timestamp": 1679337744624,
+      "id": 3
     }
   ],
   "messages": [
@@ -90,6 +118,44 @@
       },
       "message": "How are you?",
       "timestamp": 1661976143678
+    },
+    {
+      "conversationId": 3,
+      "sender": {
+        "email": "khondokar1@gmail.com",
+        "name": "khondokar1",
+        "isAgreed": true,
+        "id": 4
+      },
+      "receiver": {
+        "email": "shahnewaz601@gmail.com",
+        "password": "$2a$10$xEWYg/FV8mclt3IfsMa2WuGOo7fXIzku/ovv9kfEk/9eQ.NFMXWwu",
+        "name": "Muhammad Shahnewaz",
+        "isAgreed": true,
+        "id": 1
+      },
+      "message": "Hello Shahnewaz!",
+      "timestamp": 1679337677299,
+      "id": 3
+    },
+    {
+      "conversationId": 3,
+      "sender": {
+        "email": "shahnewaz601@gmail.com",
+        "name": "Muhammad Shahnewaz",
+        "isAgreed": true,
+        "id": 1
+      },
+      "receiver": {
+        "email": "khondokar1@gmail.com",
+        "password": "$2a$10$8O7yxSERUyiof6sCc1qbqejfgTFLhAmv3LhGvPFSzaQOGAyjt9bDW",
+        "name": "khondokar1",
+        "isAgreed": true,
+        "id": 4
+      },
+      "message": "I'm fine and you?\n",
+      "timestamp": 1679337744624,
+      "id": 4
     }
   ]
 }
