@@ -20,9 +20,12 @@ const Modal = ({ open, control }) => {
   const formRef = useRef(null);
 
   //   query
-  const { data: participant } = useGetUserQuery(mutationData?.sender, {
-    skip: !userCheck,
-  });
+  const { data: participant, isLoading } = useGetUserQuery(
+    mutationData?.sender,
+    {
+      skip: !userCheck,
+    }
+  );
 
   const isLoggedInUserParticipant =
     size(participant) && participant[0]?.email === loggedInUser?.email;
@@ -84,7 +87,6 @@ const Modal = ({ open, control }) => {
       })
         .unwrap()
         .then((data) => {
-          alert("Successfully sent");
           formRef.current.reset();
           setMutationData({});
           control();
@@ -95,7 +97,6 @@ const Modal = ({ open, control }) => {
       addConversation({ sender: loggedInUser?.email, data: updatedData })
         .unwrap()
         .then((data) => {
-          alert("Successfully sent");
           formRef.current.reset();
           setMutationData({});
           control();
@@ -155,7 +156,9 @@ const Modal = ({ open, control }) => {
               <button
                 type="submit"
                 disabled={
-                  isLoggedInUserParticipant || conversations === undefined
+                  isLoggedInUserParticipant ||
+                  isLoading ||
+                  conversations === undefined
                 }
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500"
               >

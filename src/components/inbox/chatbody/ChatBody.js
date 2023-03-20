@@ -30,7 +30,7 @@ const ChatBody = () => {
               <>
                 <ChatHead message={messages[0]} />
                 <Messages messages={messages} />
-                <Options />
+                <Options message={messages[0]} />
               </>
             );
           }
