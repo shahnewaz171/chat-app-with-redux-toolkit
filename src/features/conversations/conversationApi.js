@@ -1,3 +1,4 @@
+import { io } from "socket.io-client";
 import { apiSlice } from "../api/apiSlice";
 import { messagesAPi } from "../messages/messagesApi";
 
@@ -6,6 +7,44 @@ export const conversationApi = apiSlice.injectEndpoints({
     getConversations: builder.query({
       query: (email) =>
         `/conversations?participants_like=${email}&_sort=timestamp&_order=desc&_page=1&_limit=5`,
+
+      async onCacheEntryAdded(
+        arg,
+        { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
+      ) {
+        // create socket
+        const socket = io("http://localhost:9000", {
+          reconnectionDelay: 1000,
+          reconnection: true,
+          reconnectionAttempts: 10,
+          transports: ["websocket"],
+          agent: false,
+          upgrade: false,
+          rejectUnauthorized: false,
+        });
+
+        try {
+          await cacheDataLoaded;
+          socket.on("conversations", (data) => {
+            updateCachedData((draft) => {
+              const conversation = draft?.find(
+                (item) => item?.id === data?.data?.id
+              );
+
+              if (conversation?.id) {
+                conversation.message = data?.data?.message;
+                conversation.timestamp = data?.data?.timestamp;
+              } else {
+                // do  nothing
+                // draft.unshift(data?.data);
+              }
+            });
+          });
+        } catch (err) {}
+
+        await cacheEntryRemoved;
+        socket.close();
+      },
     }),
     getConversation: builder.query({
       query: ({ userEmail, participantsEmail }) =>
