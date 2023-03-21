@@ -32,6 +32,13 @@
       "name": "khondokar2",
       "isAgreed": true,
       "id": 5
+    },
+    {
+      "email": "newaz11@gmail.com",
+      "password": "$2a$10$PcEWs1C1prAhmfswv2Ih8eXixZCl7dbOiROEOXVL/2/zz9B73kqh.",
+      "name": "newaz11",
+      "isAgreed": true,
+      "id": 6
     }
   ],
   "conversations": [
